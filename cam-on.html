@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cảm Ơn Bạn! – Tìm Lại Sự Thảnh Thơi Trong 14 Ngày</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --sage: #557f55;
+    --sage-light: #a5bfa5;
+    --sage-pale: #e6ede6;
+    --peach: #f97316;
+    --cream: #fdf8f0;
+    --warm: #e0af78;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    background: linear-gradient(160deg, #fefcf8 0%, #f4f7f4 50%, #fdf8f0 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+    color: #2c3e2c;
+  }
+  .container { max-width: 500px; width: 100%; }
+
+  /* Hero */
+  .hero-card {
+    background: linear-gradient(135deg, #2c432c 0%, #426542 50%, #557f55 100%);
+    border-radius: 24px;
+    padding: 40px 28px 36px;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 70% 20%, rgba(255,255,255,.08) 0%, transparent 60%);
+  }
+  .confetti { font-size: 48px; margin-bottom: 16px; display: block; animation: bounce 1s ease infinite alternate; }
+  @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-8px); } }
+  .hero-card h1 { font-size: clamp(24px, 6vw, 34px); font-weight: 800; line-height: 1.2; margin-bottom: 10px; }
+  .hero-card h1 span { color: #c8e8a8; }
+  .hero-card p { font-size: 15px; opacity: .9; line-height: 1.7; }
+
+  /* Steps card */
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 6px 30px rgba(85,127,85,.1);
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: #6b7c6b;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Next steps */
+  .step-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px dashed #eef2ee;
+  }
+  .step-item:last-child { border-bottom: none; }
+  .step-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--sage-pale);
+    color: var(--sage);
+    font-weight: 800;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-content { flex: 1; }
+  .step-content strong { font-size: 14px; color: #2c3e2c; display: block; margin-bottom: 3px; }
+  .step-content span { font-size: 13px; color: #7a8a7a; line-height: 1.5; }
+
+  /* Pending notice */
+  .pending-notice {
+    background: linear-gradient(135deg, #fff8f0 0%, #fff3e8 100%);
+    border: 1.5px solid #ffd8b5;
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .pending-notice .icon { font-size: 32px; margin-bottom: 8px; }
+  .pending-notice h3 { font-size: 15px; font-weight: 700; color: #8a5a1a; margin-bottom: 6px; }
+  .pending-notice p { font-size: 13px; color: #9a7040; line-height: 1.6; }
+
+  /* Customer info */
+  .info-box {
+    background: var(--sage-pale);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 6px;
+  }
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    font-size: 13px;
+  }
+  .info-row .lbl { color: #6b7c6b; }
+  .info-row .val { font-weight: 700; color: #2c3e2c; }
+
+  /* Button vào học */
+  .btn-study {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #557f55 0%, #426542 100%);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(85,127,85,.35);
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    transition: transform .15s;
+    margin-bottom: 12px;
+  }
+  .btn-study:hover { transform: translateY(-2px); }
+
+  /* Nút quay lại */
+  .btn-back {
+    width: 100%;
+    padding: 14px;
+    background: #fff;
+    color: var(--sage);
+    border: 2px solid var(--sage);
+    border-radius: 14px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    transition: transform .15s, background .15s;
+    margin-bottom: 16px;
+  }
+  .btn-back:hover { background: var(--sage-pale); transform: translateY(-2px); }
+
+  /* Zalo support */
+  .support-row {
+    text-align: center;
+    font-size: 13px;
+    color: #9aaa9a;
+  }
+  .support-row a { color: var(--sage); font-weight: 700; text-decoration: none; }
+
+  /* Order code */
+  .order-code-box {
+    background: #f4f7f4;
+    border: 1px dashed var(--sage-light);
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 13px;
+    color: #6b7c6b;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .order-code-box strong { color: var(--sage); font-size: 15px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Hero -->
+  <div class="hero-card">
+    <span class="confetti">🌿</span>
+    <h1>Cảm ơn bạn<br/><span>đã tin tưởng!</span></h1>
+    <p>Thanh toán của bạn đã được xác nhận. Chúc bạn có một hành trình thật trọn vẹn! 🌿</p>
+  </div>
+
+  <!-- Confirmed -->
+  <div class="pending-notice" style="background: linear-gradient(135deg, #f0faf0 0%, #e6f5e6 100%); border-color: #a5bfa5;">
+    <div class="icon">✅</div>
+    <h3 style="color: #2c6e2c;">Thanh toán đã được ghi nhận!</h3>
+    <p style="color: #4a7a4a;">Email kèm link vào trang học đã được gửi đến hộp thư của bạn. Kiểm tra email nhé — kể cả thư mục <strong>Spam</strong> nếu chưa thấy!</p>
+  </div>
+
+  <!-- Order info -->
+  <div class="card">
+    <div class="card-title">📋 Thông tin đơn hàng</div>
+    <div class="info-box" id="infoBox">
+      Đang tải...
+    </div>
+    <div class="order-code-box">
+      Mã đơn hàng: <strong id="orderCodeDisplay">—</strong>
+    </div>
+  </div>
+
+  <!-- Steps -->
+  <div class="card">
+    <div class="card-title">📌 Các bước tiếp theo</div>
+
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Kiểm tra email của bạn</strong>
+        <span>Chúng mình sẽ gửi link vào trang học qua email trong vòng 15 phút sau khi xác nhận thanh toán.</span>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Vào trang học bằng SĐT hoặc email</strong>
+        <span>Dùng số điện thoại hoặc email đã đăng ký để đăng nhập — không cần mật khẩu!</span>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>Bắt đầu hành trình 14 ngày</strong>
+        <span>Chỉ 2–5 phút mỗi ngày, áp dụng ngay tại nhà, thuần tự nhiên 🌿</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA học ngay (sẽ hiển thị sau khi admin xác nhận) -->
+  <a href="bai-hoc.html" class="btn-study" id="studyBtn" style="display:none">
+    🎓 Vào trang học ngay →
+  </a>
+
+  <!-- Quay lại thanh toán -->
+  <a href="thanh-toan.html" class="btn-back" id="backBtn">
+    ← Quay lại trang thanh toán
+  </a>
+
+  <!-- Support -->
+  <div class="support-row">
+    Cần hỗ trợ? Nhắn tin Zalo: <a href="https://zalo.me/0972155200" target="_blank">Ngô Ánh Tuyết</a>
+  </div>
+
+</div>
+
+<script>
+const name = localStorage.getItem('kh_name') || '—';
+const email = localStorage.getItem('kh_email') || '—';
+const phone = localStorage.getItem('kh_phone') || '—';
+const orderCode = localStorage.getItem('kh_order_code') || '—';
+
+document.getElementById('infoBox').innerHTML = `
+  <div style="display:flex;flex-direction:column;gap:2px;">
+    <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0;">
+      <span style="color:#6b7c6b;">Họ tên</span>
+      <span style="font-weight:700;color:#2c3e2c;">${name}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0;">
+      <span style="color:#6b7c6b;">Email</span>
+      <span style="font-weight:700;color:#2c3e2c;">${email}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0;">
+      <span style="color:#6b7c6b;">Số điện thoại</span>
+      <span style="font-weight:700;color:#2c3e2c;">${phone}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0;">
+      <span style="color:#6b7c6b;">Sản phẩm</span>
+      <span style="font-weight:700;color:#557f55;">Hành Trình 14 Ngày – 679.000đ</span>
+    </div>
+  </div>
+`;
+
+document.getElementById('orderCodeDisplay').textContent = orderCode;
+</script>
+</body>
+</html>

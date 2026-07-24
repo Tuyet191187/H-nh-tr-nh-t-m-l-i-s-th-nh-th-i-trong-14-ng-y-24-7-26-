@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Thanh Toán – Tìm Lại Sự Thảnh Thơi Trong 14 Ngày</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --sage: #557f55;
+    --sage-light: #a5bfa5;
+    --sage-pale: #e6ede6;
+    --peach: #f97316;
+    --cream: #fdf8f0;
+    --warm: #e0af78;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    background: linear-gradient(160deg, #fefcf8 0%, #f4f7f4 50%, #fdf8f0 100%);
+    min-height: 100vh;
+    padding: 32px 16px 60px;
+    color: #2c3e2c;
+  }
+
+  .container { max-width: 520px; margin: 0 auto; }
+
+  .header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .step-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--sage-pale);
+    border: 1px solid var(--sage-light);
+    border-radius: 30px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--sage);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .header h1 {
+    font-size: clamp(22px, 5vw, 28px);
+    font-weight: 800;
+    color: #2c3e2c;
+  }
+  .header h1 span { color: var(--sage); }
+
+  /* Steps */
+  .steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+  .step { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .step-circle {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+  }
+  .step.done .step-circle { background: var(--sage-pale); color: var(--sage); }
+  .step.active .step-circle { background: var(--sage); color: #fff; }
+  .step.inactive .step-circle { background: #e8ece8; color: #aaa; }
+  .step-label { font-size: 10px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+  .step.done .step-label { color: var(--sage-light); }
+  .step.active .step-label { color: var(--sage); }
+  .step.inactive .step-label { color: #bbb; }
+  .step-line { width: 48px; height: 2px; background: #e0e8e0; margin-bottom: 18px; }
+
+  /* Card */
+  .card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 28px 24px;
+    box-shadow: 0 8px 40px rgba(85,127,85,.12);
+    margin-bottom: 16px;
+  }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #3a4e3a;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Order summary */
+  .order-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed #eef2ee;
+  }
+  .order-row:last-child { border-bottom: none; }
+  .order-name { font-size: 14px; color: #2c3e2c; font-weight: 500; }
+  .order-price { font-size: 14px; font-weight: 700; color: var(--sage); }
+  .order-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 2px solid var(--sage-pale);
+  }
+  .order-total-label { font-size: 15px; font-weight: 700; color: #2c3e2c; }
+  .order-total-price { font-size: 24px; font-weight: 800; color: var(--sage); }
+
+  /* Countdown */
+  .countdown-wrap {
+    background: linear-gradient(135deg, #fff8f3 0%, #fff3ea 100%);
+    border: 1.5px solid #ffd8b5;
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .countdown-icon { font-size: 24px; }
+  .countdown-text { font-size: 13px; color: #9a5a1a; font-weight: 600; }
+  .countdown-timer {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--peach);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: .02em;
+  }
+
+  /* QR section */
+  .qr-wrap {
+    text-align: center;
+  }
+  .qr-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 16px;
+    border: 3px solid var(--sage-pale);
+    box-shadow: 0 4px 20px rgba(85,127,85,.15);
+    margin: 0 auto 16px;
+    display: block;
+  }
+  .bank-info {
+    background: var(--sage-pale);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    text-align: left;
+  }
+  .bank-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    font-size: 14px;
+  }
+  .bank-row .label { color: #6b7c6b; font-weight: 500; }
+  .bank-row .value { color: #2c3e2c; font-weight: 700; }
+  .bank-row .value.copy {
+    cursor: pointer;
+    color: var(--sage);
+    text-decoration: underline dotted;
+  }
+
+  /* Nội dung CK */
+  .transfer-content {
+    background: linear-gradient(135deg, #f4f7f4 0%, #e6ede6 100%);
+    border: 2px dashed var(--sage-light);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 12px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .transfer-content .code {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--sage);
+    letter-spacing: .05em;
+  }
+  .copy-btn {
+    background: var(--sage);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Be Vietnam Pro', sans-serif;
+  }
+  .copy-btn:active { opacity: .8; }
+
+  .important-note {
+    background: #fff8f0;
+    border-left: 3px solid var(--peach);
+    border-radius: 0 10px 10px 0;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #8a5a2a;
+    line-height: 1.6;
+    margin: 12px 0;
+  }
+
+  /* Confirm button */
+  .btn-confirm {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #557f55 0%, #426542 100%);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 6px 20px rgba(85,127,85,.35);
+    margin-top: 8px;
+  }
+  .btn-confirm:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(85,127,85,.4); }
+
+  /* Status box (auto-confirm) */
+  .status-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 15px;
+    margin-top: 8px;
+  }
+  .status-box.pending { background: #fff3ea; color: #9a5a1a; }
+  .status-box.paid { background: var(--sage-pale); color: var(--sage); }
+  .pulse-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: currentColor;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+
+  .back-link {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 13px;
+    color: #9aaa9a;
+  }
+  .back-link a { color: var(--sage); text-decoration: none; font-weight: 600; }
+
+  /* Customer info display */
+  .customer-box {
+    background: var(--sage-pale);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: #3a4e3a;
+  }
+  .customer-box strong { font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="step-badge">💳 Bước 2 / 3</div>
+    <h1>Thanh toán<br/><span>chuyển khoản</span></h1>
+  </div>
+
+  <!-- Steps -->
+  <div class="steps">
+    <div class="step done">
+      <div class="step-circle">✓</div>
+      <div class="step-label">Thông tin</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step active">
+      <div class="step-circle">2</div>
+      <div class="step-label">Thanh toán</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step inactive">
+      <div class="step-circle">3</div>
+      <div class="step-label">Hoàn tất</div>
+    </div>
+  </div>
+
+  <!-- Countdown -->
+  <div class="countdown-wrap">
+    <div class="countdown-icon">⏳</div>
+    <div>
+      <div class="countdown-text">Đơn hàng giữ chỗ trong</div>
+      <div class="countdown-timer" id="timer">15:00</div>
+    </div>
+  </div>
+
+  <!-- Order summary -->
+  <div class="card">
+    <div class="card-title">🛒 Đơn hàng của bạn</div>
+
+    <div class="customer-box" id="customerBox">
+      👤 Đang tải thông tin...
+    </div>
+
+    <div class="order-row">
+      <span class="order-name">🌿 Hành Trình 14 Ngày – Tìm Lại Sự Thảnh Thơi</span>
+      <span class="order-price">679.000đ</span>
+    </div>
+
+    <div class="order-total-row">
+      <span class="order-total-label">Tổng thanh toán</span>
+      <span class="order-total-price" id="totalPrice">679.000đ</span>
+    </div>
+  </div>
+
+  <!-- QR Payment -->
+  <div class="card">
+    <div class="card-title">📱 Quét QR để thanh toán</div>
+    <div class="qr-wrap">
+
+      <!-- QR động từ VietQR -->
+      <img
+        id="qrImage"
+        class="qr-img"
+        src=""
+        alt="QR SePay - VietinBank"
+      />
+
+      <div class="bank-info">
+        <div class="bank-row">
+          <span class="label">Ngân hàng</span>
+          <span class="value">VietinBank</span>
+        </div>
+        <div class="bank-row">
+          <span class="label">Chủ tài khoản</span>
+          <span class="value">NGO NGUYEN THI ANH TUYET</span>
+        </div>
+        <div class="bank-row">
+          <span class="label">Số tài khoản</span>
+          <span class="value copy" onclick="copyText('105004975280')">105004975280 📋</span>
+        </div>
+      </div>
+
+      <div style="font-size: 13px; font-weight: 700; color: #3a4e3a; margin-bottom: 8px;">
+        📝 Nội dung chuyển khoản (bắt buộc):
+      </div>
+      <div class="transfer-content">
+        <span class="code" id="transferCode">THANHTHO_XXXX</span>
+        <button class="copy-btn" onclick="copyTransferCode()">Sao chép</button>
+      </div>
+
+      <div class="important-note">
+        ⚠️ <strong>Quan trọng:</strong> Bạn <strong>phải ghi đúng nội dung chuyển khoản</strong> ở trên để hệ thống tự động xác nhận và gửi tài liệu cho bạn. Nếu quên, vui lòng nhắn tin cho Tuyết để xác nhận thủ công.
+      </div>
+
+      <div class="status-box pending" id="statusBox">
+        <span class="pulse-dot"></span><span id="statusText">Đang chờ giao dịch...</span>
+      </div>
+
+      <button type="button" id="zaloNoEmailBtn" onclick="openZaloWithMessage()" style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:14px; background:#fff; color:var(--sage); border:2px solid var(--sage); border-radius:14px; font-family:'Be Vietnam Pro', sans-serif; font-size:14px; font-weight:700; cursor:pointer; margin-top:12px;">
+        📩 Không có Email? Nhắn Zalo Tuyết ngay
+      </button>
+      <p style="text-align:center; font-size:12px; color:#9aaa9a; margin-top:8px; line-height:1.6;">
+        Không sao cả — sau khi chuyển khoản xong, bấm nút trên để mở Zalo Tuyết. Tin nhắn đã được sao chép sẵn, bạn chỉ cần <strong>dán (paste)</strong> vào khung chat và gửi.
+      </p>
+    </div>
+  </div>
+
+  <div class="back-link">
+    <a href="dang-ky.html">← Quay lại chỉnh thông tin</a>
+  </div>
+
+</div>
+
+<script>
+// --- Lấy thông tin khách hàng từ localStorage ---
+const name = localStorage.getItem('kh_name') || '';
+const email = localStorage.getItem('kh_email') || '';
+const phone = localStorage.getItem('kh_phone') || '';
+
+if (!name || !email) {
+  // Nếu chưa có thông tin, redirect về trang đăng ký
+  window.location.href = 'dang-ky.html';
+}
+
+// Hiển thị thông tin khách
+document.getElementById('customerBox').innerHTML =
+  `👤 <strong>${name}</strong> &nbsp;|&nbsp; 📧 ${email} &nbsp;|&nbsp; 📱 ${phone}`;
+
+// --- Địa chỉ Google Apps Script backend (thay cho Make.com) ---
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwlV2Dep0CuBYnH6us05lnFlH64NTEpJi-gckVH9T6i746Wk97EWF03NKIj3c4s00ACeA/exec';
+
+const amount = 679000;
+const accountNo = '105004975280';
+
+let orderCode = '';
+let orderId = '';
+
+// --- Tạo đơn hàng trên GAS, lấy mã CK đúng chuẩn HT14N do backend cấp ---
+async function initOrder() {
+  try {
+    const res = await fetch(GAS_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        action: 'createOrder',
+        data: { name: name, phone: phone, email: email, totalAmount: amount }
+      })
+    });
+    const json = await res.json();
+    if (!json.success) throw new Error(json.error || 'createOrder thất bại');
+    orderId = json.orderId;
+    orderCode = json.ckContent;
+  } catch (err) {
+    console.error('Không tạo được đơn hàng:', err);
+    document.getElementById('statusText').textContent = 'Có lỗi khi tạo đơn, vui lòng tải lại trang';
+    return;
+  }
+
+  localStorage.setItem('kh_order_code', orderCode);
+  localStorage.setItem('kh_order_id', orderId);
+  document.getElementById('transferCode').textContent = orderCode;
+
+  const qrUrl = `https://qr.sepay.vn/img?bank=VietinBank&acc=${accountNo}&template=compact&amount=${amount}&des=${orderCode}&showinfo=true&holder=NGO%20NGUYEN%20THI%20ANH%20TUYET`;
+  document.getElementById('qrImage').src = qrUrl;
+
+  pollStatus();
+}
+
+initOrder();
+
+// --- Tự động kiểm tra trạng thái mỗi 5 giây, chuyển trang khi PAID ---
+function pollStatus() {
+  if (!orderId) { setTimeout(pollStatus, 5000); return; }
+  fetch(GAS_URL + '?action=getStatus&orderId=' + encodeURIComponent(orderId))
+    .then(res => res.json())
+    .then(json => {
+      if (json.success && json.status === 'PAID') {
+        const box = document.getElementById('statusBox');
+        box.className = 'status-box paid';
+        document.getElementById('statusText').textContent = '✓ Đã nhận thanh toán · Đang chuyển trang...';
+        localStorage.setItem('kh_paid', 'true');
+        setTimeout(() => { window.location.href = 'cam-on.html'; }, 1500);
+        return;
+      }
+      setTimeout(pollStatus, 5000);
+    })
+    .catch(err => {
+      console.error('Lỗi kiểm tra trạng thái:', err);
+      setTimeout(pollStatus, 5000);
+    });
+}
+
+// --- Tạo tin nhắn soạn sẵn cho khách không có email (lấy mã đơn mới nhất tại thời điểm bấm) ---
+function openZaloWithMessage() {
+  const zaloMessage = `Em đã chuyển khoản xong, mã đơn hàng ${orderCode}, tên ${name}, em không có email, chị gửi tài liệu giúp em qua Zalo nhé ạ`;
+  navigator.clipboard.writeText(zaloMessage).then(() => {
+    alert('Đã sao chép tin nhắn! Hãy dán (paste) vào khung chat Zalo và gửi cho Tuyết nhé.');
+    window.open('https://zalo.me/0972155200', '_blank');
+  }).catch(() => {
+    // Nếu trình duyệt không hỗ trợ clipboard, vẫn mở Zalo
+    window.open('https://zalo.me/0972155200', '_blank');
+  });
+}
+
+// --- Countdown 15 phút ---
+let timeLeft = 15 * 60;
+const timerEl = document.getElementById('timer');
+const interval = setInterval(() => {
+  if (timeLeft <= 0) {
+    clearInterval(interval);
+    timerEl.textContent = 'Hết giờ';
+    timerEl.style.color = '#e05c5c';
+    return;
+  }
+  timeLeft--;
+  const m = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+  const s = String(timeLeft % 60).padStart(2, '0');
+  timerEl.textContent = `${m}:${s}`;
+}, 1000);
+
+// --- Copy functions ---
+function copyText(text) {
+  navigator.clipboard.writeText(text).then(() => alert('Đã sao chép: ' + text));
+}
+
+function copyTransferCode() {
+  const code = document.getElementById('transferCode').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✓ Đã sao chép!';
+    btn.style.background = '#4a9b6f';
+    setTimeout(() => { btn.textContent = 'Sao chép'; btn.style.background = ''; }, 2000);
+  });
+}
+</script>
+</body>
+</html>
