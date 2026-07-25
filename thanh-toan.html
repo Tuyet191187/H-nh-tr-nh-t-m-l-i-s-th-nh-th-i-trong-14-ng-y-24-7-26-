@@ -441,6 +441,14 @@ async function initOrder() {
 
 initOrder();
 
+// --- Khi em quay lại tab (ví dụ sau khi mở app ngân hàng để chuyển khoản),
+// kiểm tra lại trạng thái ngay lập tức thay vì chờ hết chu kỳ 5 giây,
+// vì trình duyệt di động thường tạm dừng polling khi tab chạy nền ---
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') pollStatus();
+});
+window.addEventListener('focus', () => pollStatus());
+
 // --- Tự động kiểm tra trạng thái mỗi 5 giây, chuyển trang khi PAID ---
 function pollStatus() {
   if (!orderId) { setTimeout(pollStatus, 5000); return; }
