@@ -450,11 +450,21 @@ document.addEventListener('visibilitychange', () => {
 window.addEventListener('focus', () => pollStatus());
 
 // --- Tự động kiểm tra trạng thái mỗi 5 giây, chuyển trang khi PAID ---
+// pollInFlight đảm bảo chỉ có 1 request đang chạy tại một thời điểm,
+// tránh việc mở/đóng tab hay DevTools kích hoạt nhiều vòng lặp chồng nhau.
+let pollTimer = null;
+let pollInFlight = false;
+
 function pollStatus() {
-  if (!orderId) { setTimeout(pollStatus, 5000); return; }
+  if (!orderId) { pollTimer = setTimeout(pollStatus, 5000); return; }
+  if (pollInFlight) return;
+  pollInFlight = true;
+  if (pollTimer) clearTimeout(pollTimer);
+
   fetch(GAS_URL + '?action=getStatus&orderId=' + encodeURIComponent(orderId))
     .then(res => res.json())
     .then(json => {
+      pollInFlight = false;
       if (json.success && json.status === 'PAID') {
         const box = document.getElementById('statusBox');
         box.className = 'status-box paid';
@@ -463,11 +473,12 @@ function pollStatus() {
         setTimeout(() => { window.location.href = 'cam-on.html'; }, 1500);
         return;
       }
-      setTimeout(pollStatus, 5000);
+      pollTimer = setTimeout(pollStatus, 5000);
     })
     .catch(err => {
+      pollInFlight = false;
       console.error('Lỗi kiểm tra trạng thái:', err);
-      setTimeout(pollStatus, 5000);
+      pollTimer = setTimeout(pollStatus, 5000);
     });
 }
 
