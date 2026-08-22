@@ -301,7 +301,7 @@ document.getElementById('infoBox').innerHTML = `
     </div>
     <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0;">
       <span style="color:#6b7c6b;">Sản phẩm</span>
-      <span style="font-weight:700;color:#557f55;">Hành Trình 14 Ngày – 679.000đ</span>
+      <span style="font-weight:700;color:#557f55;">Hành Trình 14 Ngày – 479.000đ</span>
     </div>
   </div>
 `;
@@ -313,7 +313,7 @@ document.getElementById('orderCodeDisplay').textContent = orderCode;
 if (typeof fbq === 'function' && orderCode !== '—') {
   const trackedKey = 'kh_purchase_tracked_' + orderCode;
   if (!localStorage.getItem(trackedKey)) {
-    fbq('track', 'Purchase', { value: 679000, currency: 'VND' });
+    fbq('track', 'Purchase', { value: 479000, currency: 'VND' });
     localStorage.setItem(trackedKey, 'true');
   }
 }

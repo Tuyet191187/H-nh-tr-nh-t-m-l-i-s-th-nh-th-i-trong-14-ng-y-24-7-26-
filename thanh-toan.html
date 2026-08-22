@@ -260,6 +260,25 @@
   }
   .back-link a { color: var(--sage); text-decoration: none; font-weight: 600; }
 
+  .btn-back {
+    width: 100%;
+    padding: 14px;
+    background: #fff;
+    color: var(--sage);
+    border: 2px solid var(--sage);
+    border-radius: 14px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    transition: transform .15s, background .15s;
+    margin-top: 16px;
+  }
+  .btn-back:hover { background: var(--sage-pale); transform: translateY(-2px); }
+
   /* Customer info display */
   .customer-box {
     background: var(--sage-pale);
@@ -334,12 +353,12 @@ src="https://www.facebook.com/tr?id=1678547590026817&ev=PageView&noscript=1"
 
     <div class="order-row">
       <span class="order-name">🌿 Hành Trình 14 Ngày – Tìm Lại Sự Thảnh Thơi</span>
-      <span class="order-price">679.000đ</span>
+      <span class="order-price">479.000đ</span>
     </div>
 
     <div class="order-total-row">
       <span class="order-total-label">Tổng thanh toán</span>
-      <span class="order-total-price" id="totalPrice">679.000đ</span>
+      <span class="order-total-price" id="totalPrice">479.000đ</span>
     </div>
   </div>
 
@@ -393,9 +412,7 @@ src="https://www.facebook.com/tr?id=1678547590026817&ev=PageView&noscript=1"
     </div>
   </div>
 
-  <div class="back-link">
-    <a href="dang-ky.html">← Quay lại chỉnh thông tin</a>
-  </div>
+  <a href="dang-ky.html" class="btn-back">← Quay lại trang đăng ký</a>
 
 </div>
 
@@ -417,7 +434,7 @@ document.getElementById('customerBox').innerHTML =
 // --- Địa chỉ Google Apps Script backend (thay cho Make.com) ---
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwBsEk465AEXKOEDgkX-olYKEn1-qqFM2HmVfLHjzdcmBegcnvq-7w0RtHPaOnpMeLtPQ/exec';
 
-const amount = 679000;
+const amount = 479000;
 const accountNo = '105004975280';
 
 let orderCode = '';
