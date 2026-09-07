@@ -220,26 +220,61 @@
     background: linear-gradient(135deg, #f4f7f4 0%, #fdf8f0 100%);
     border: 1px solid #dde8dd;
     border-radius: 14px;
-    padding: 16px 18px;
+    padding: 20px 20px;
     margin-bottom: 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
   }
   .product-name {
+    font-size: 15px;
+    font-weight: 800;
+    color: #2c3e2c;
+  }
+  .product-sub {
+    font-size: 12px;
+    color: #8a9a8a;
+    margin-top: 2px;
+  }
+  .benefit-list {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+  }
+  .benefit-list li {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    font-size: 12.5px;
+    color: #3a4e3a;
+    line-height: 1.5;
+    margin-bottom: 7px;
+  }
+  .benefit-list li .check {
+    color: var(--sage);
+    flex-shrink: 0;
+  }
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 14px;
+    margin-top: 8px;
+    border-top: 1px dashed #dde8dd;
+  }
+  .price-label {
     font-size: 13px;
     font-weight: 700;
     color: #2c3e2c;
   }
-  .product-sub {
-    font-size: 11px;
-    color: #8a9a8a;
-    margin-top: 2px;
-  }
   .product-price {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 800;
     color: var(--sage);
+  }
+  .compare-text {
+    font-size: 11.5px;
+    color: #8a9a8a;
+    font-style: italic;
+    line-height: 1.6;
+    margin-top: 10px;
   }
 </style>
 <!-- Meta Pixel Code -->
@@ -293,11 +328,24 @@ src="https://www.facebook.com/tr?id=1678547590026817&ev=PageView&noscript=1"
 
     <!-- Product summary -->
     <div class="product-summary">
-      <div>
-        <div class="product-name">🌿 Hành Trình 14 Ngày</div>
-        <div class="product-sub">Tìm Lại Sự Thảnh Thơi</div>
+      <div class="product-name">🌿 Hành Trình 14 Ngày Thảnh Thơi</div>
+      <div class="product-sub">Truy cập ngay sau khi đăng ký</div>
+
+      <ul class="benefit-list">
+        <li><span class="check">✅</span><span>14 Video hướng dẫn thực hành chi tiết</span></li>
+        <li><span class="check">✅</span><span>Bản đồ lộ trình Kiệt Sức → Thảnh Thơi</span></li>
+        <li><span class="check">✅</span><span>Bảng theo dõi tiến độ hàng ngày (Checklist Vườn Hoa Thảnh Thơi)</span></li>
+        <li><span class="check">✅</span><span>Cẩm nang Ăn Uống Cân Bằng Năng Lượng</span></li>
+        <li><span class="check">✅</span><span>Cộng đồng Sống Vui Khỏe + đồng hành trực tiếp cùng Tuyết</span></li>
+        <li><span class="check">✅</span><span>Truy cập trọn 1 năm, học và thực hành theo nhịp riêng</span></li>
+      </ul>
+
+      <div class="price-row">
+        <div class="price-label">Trọn Bộ Hành Trình 14 Ngày</div>
+        <div class="product-price">479.000đ</div>
       </div>
-      <div class="product-price">479.000đ</div>
+
+      <p class="compare-text">Một chuyến du lịch có thể cho bạn vài ngày thảnh thơi. 479.000đ hôm nay có thể là bước khởi đầu để bạn học cách tạo ra sự thảnh thơi ngay trong cuộc sống mình đang có.</p>
     </div>
 
     <!-- Form -->
