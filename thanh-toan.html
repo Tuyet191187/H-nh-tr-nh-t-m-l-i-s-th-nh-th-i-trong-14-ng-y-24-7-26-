@@ -150,6 +150,36 @@
     margin: 0 auto 16px;
     display: block;
   }
+  .qr-loading {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 16px;
+    border-radius: 16px;
+    background: var(--sage-pale);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .qr-spinner {
+    width: 34px;
+    height: 34px;
+    border: 4px solid #fff;
+    border-top-color: var(--sage);
+    border-radius: 50%;
+    animation: qr-spin .8s linear infinite;
+  }
+  @keyframes qr-spin { to { transform: rotate(360deg); } }
+  .qr-loading-text {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--sage);
+  }
+  .qr-retry-text {
+    font-size: 11px;
+    color: #9a5a1a;
+  }
   .bank-info {
     background: var(--sage-pale);
     border-radius: 12px;
@@ -368,9 +398,14 @@ src="https://www.facebook.com/tr?id=1678547590026817&ev=PageView&noscript=1"
     <div class="qr-wrap">
 
       <!-- QR động từ VietQR -->
+      <div id="qrLoading" class="qr-loading">
+        <div class="qr-spinner"></div>
+        <div class="qr-loading-text" id="qrLoadingText">Đang tạo mã QR...</div>
+      </div>
       <img
         id="qrImage"
         class="qr-img"
+        style="display:none;"
         src=""
         alt="QR SePay - VietinBank"
       />
@@ -441,22 +476,47 @@ let orderCode = '';
 let orderId = '';
 
 // --- Tạo đơn hàng trên GAS, lấy mã CK đúng chuẩn HT14N do backend cấp ---
-async function initOrder() {
+// Có timeout + tự động thử lại tối đa 3 lần, vì GAS đôi khi phản hồi chậm
+// ở lần gọi đầu tiên (đặc biệt trên mạng di động), thay vì bắt khách tự tải lại trang.
+const MAX_ORDER_ATTEMPTS = 3;
+
+async function initOrder(attempt = 1) {
+  if (attempt > 1) {
+    document.getElementById('qrLoadingText').textContent =
+      `Đang thử lại (${attempt}/${MAX_ORDER_ATTEMPTS})...`;
+  }
+
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s mỗi lần thử
+
     const res = await fetch(GAS_URL, {
       method: 'POST',
       body: JSON.stringify({
         action: 'createOrder',
         data: { name: name, phone: phone, email: email, totalAmount: amount }
-      })
+      }),
+      signal: controller.signal
     });
+    clearTimeout(timeoutId);
+
     const json = await res.json();
     if (!json.success) throw new Error(json.error || 'createOrder thất bại');
     orderId = json.orderId;
     orderCode = json.ckContent;
   } catch (err) {
-    console.error('Không tạo được đơn hàng:', err);
-    document.getElementById('statusText').textContent = 'Có lỗi khi tạo đơn, vui lòng tải lại trang';
+    console.error(`Không tạo được đơn hàng (lần ${attempt}):`, err);
+    if (attempt < MAX_ORDER_ATTEMPTS) {
+      setTimeout(() => initOrder(attempt + 1), 1500);
+      return;
+    }
+    document.getElementById('qrLoadingText').textContent = 'Không tải được mã QR';
+    const loadingBox = document.getElementById('qrLoading');
+    const retryLine = document.createElement('div');
+    retryLine.className = 'qr-retry-text';
+    retryLine.innerHTML = 'Mạng có thể đang chậm. <a href="javascript:location.reload()" style="color:var(--sage);font-weight:700;">Bấm vào đây để thử lại</a>';
+    loadingBox.appendChild(retryLine);
+    document.getElementById('statusText').textContent = 'Có lỗi khi tạo đơn, vui lòng thử lại';
     return;
   }
 
@@ -465,7 +525,19 @@ async function initOrder() {
   document.getElementById('transferCode').textContent = orderCode;
 
   const qrUrl = `https://qr.sepay.vn/img?bank=VietinBank&acc=${accountNo}&template=compact&amount=${amount}&des=${orderCode}&showinfo=true&holder=NGO%20NGUYEN%20THI%20ANH%20TUYET`;
-  document.getElementById('qrImage').src = qrUrl;
+
+  const qrImg = document.getElementById('qrImage');
+  const qrLoading = document.getElementById('qrLoading');
+  qrImg.onload = () => {
+    qrLoading.style.display = 'none';
+    qrImg.style.display = 'block';
+  };
+  qrImg.onerror = () => {
+    // Ảnh QR lỗi (hiếm khi xảy ra) - vẫn hiện khung ảnh để khách thấy có gì đó thay vì mãi mãi loading
+    qrLoading.style.display = 'none';
+    qrImg.style.display = 'block';
+  };
+  qrImg.src = qrUrl;
 
   pollStatus();
 }

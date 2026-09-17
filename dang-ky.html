@@ -387,6 +387,14 @@ src="https://www.facebook.com/tr?id=1678547590026817&ev=PageView&noscript=1"
 </div>
 
 <script>
+// --- Gọi nhẹ tới Google Apps Script ngay khi khách vào trang đăng ký,
+// để server kịp "ấm" sẵn trước khi khách qua trang thanh toán và cần tạo đơn thật.
+// Không cần chờ hay xử lý kết quả, chỉ là một cú "đánh thức" âm thầm ---
+(function warmUpBackend() {
+  const GAS_URL = 'https://script.google.com/macros/s/AKfycbwBsEk465AEXKOEDgkX-olYKEn1-qqFM2HmVfLHjzdcmBegcnvq-7w0RtHPaOnpMeLtPQ/exec';
+  fetch(GAS_URL, { method: 'GET', mode: 'no-cors' }).catch(() => {});
+})();
+
 function goToPayment() {
   const fullname = document.getElementById('fullname').value.trim();
   const email = document.getElementById('email').value.trim();
