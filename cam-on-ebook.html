@@ -16,22 +16,24 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { -webkit-text-size-adjust: 100%; }
   body { font-family: 'Be Vietnam Pro', system-ui, sans-serif; background: var(--ivory); color: var(--ink); font-size: 16px; line-height: 1.6; min-height: 100vh; }
-  .wrap { max-width: 520px; margin: 0 auto; padding: 28px 20px 44px; }
-  .brand { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 20px; color: var(--forest); text-align: center; margin-bottom: 20px; }
-  .cover { display: block; height: auto; width: 190px; margin: 0 auto 22px; border-radius: 8px; box-shadow: 0 14px 32px rgba(47,82,64,.22); }
-  h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; font-size: clamp(30px, 8vw, 40px); line-height: 1.12; color: var(--forest); text-align: center; margin-bottom: 10px; }
-  .lead { text-align: center; margin-bottom: 26px; font-size: 16.5px; }
-  .step { display: flex; gap: 14px; align-items: flex-start; background: #fff; border: 1.5px solid var(--line); border-radius: 14px; padding: 18px 16px; margin-bottom: 14px; }
+  .wrap { max-width: 520px; margin: 0 auto; padding: 16px 20px 40px; }
+  .brand { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 20px; color: var(--forest); text-align: center; margin-bottom: 12px; }
+  .cover { display: block; height: auto; width: 96px; margin: 0 auto 10px; border-radius: 8px; box-shadow: 0 14px 32px rgba(47,82,64,.22); }
+  h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; font-size: clamp(26px, 7vw, 36px); line-height: 1.12; color: var(--forest); text-align: center; margin-bottom: 8px; }
+  .lead { text-align: center; margin-bottom: 16px; font-size: 16.5px; }
+  .step { display: flex; gap: 14px; align-items: flex-start; background: #fff; border: 1.5px solid var(--line); border-radius: 14px; padding: 14px 14px; margin-bottom: 10px; }
   .num { flex: 0 0 34px; width: 34px; height: 34px; border-radius: 50%; background: var(--sage); color: var(--forest); font-weight: 600; text-align: center; line-height: 34px; margin-top: 2px; }
-  .step h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; font-size: 23px; line-height: 1.2; color: var(--forest); margin-bottom: 4px; }
-  .step p { font-size: 15px; color: var(--ink); margin-bottom: 12px; }
-  .btn { display: block; text-align: center; text-decoration: none; font-weight: 600; font-size: 16.5px; padding: 14px 16px; border-radius: 12px; }
+  .step h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; font-size: 20px; line-height: 1.2; color: var(--forest); margin-bottom: 4px; }
+  .step p { font-size: 14.5px; color: var(--ink); margin-bottom: 10px; }
+  .btn { display: block; text-align: center; text-decoration: none; font-weight: 600; font-size: 16.5px; padding: 13px 16px; border-radius: 12px; }
   .btn.main { background: var(--forest); color: #fff; }
   .btn.main:hover { background: #254436; }
   .btn.zalo { background: var(--rose); color: #fff; }
   .btn.zalo:hover { background: #bf3a6e; }
   .btn:focus-visible { outline: 3px solid rgba(47,82,64,.4); outline-offset: 2px; }
-  .done { margin-top: 12px; padding: 10px 12px; background: var(--sage-soft); border-radius: 10px; color: var(--forest); font-size: 14.5px; }
+  .step > div:last-child { flex: 1; min-width: 0; }
+  .alt { font-size: 13.5px; color: var(--muted); margin: 10px 0 0; text-align: center; }
+  .alt a { color: var(--forest); font-weight: 600; }
   .help { text-align: center; font-size: 14px; color: var(--muted); margin-top: 22px; }
   .sign { text-align: center; margin-top: 26px; font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 600; font-size: 20px; color: var(--forest); }
 </style>
@@ -51,10 +53,9 @@ fbq('init','1678547590026817');fbq('track','PageView');fbq('track','Lead');
   <div class="step">
     <div class="num">1</div>
     <div>
-      <h2>Tải Ebook về điện thoại</h2>
-      <p>Đọc khi nào bạn có vài phút. Bạn chỉ cần chọn một khoảng dừng và làm thử hôm nay.</p>
-      <a class="btn main" href="7-Thoi-Quen-Song-Thanh-Thoi-Vui-Khoe.pdf" download>Tải Ebook</a>
-      <p class="done" id="done" hidden>Ebook đang tải về máy của bạn. Bạn mở mục Tệp (Files) hoặc Tải xuống để đọc nhé. Giờ bạn bấm Vào nhóm Zalo ở bên dưới để cùng thực hành với mình.</p>
+      <h2>Đọc Ebook ngay</h2>
+      <a class="btn main" href="ebook.html">Đọc Ebook ngay</a>
+      <p class="alt">Muốn lưu về máy? <a href="7-Thoi-Quen-Song-Thanh-Thoi-Vui-Khoe.pdf" download>Tải bản PDF</a></p>
     </div>
   </div>
 
@@ -67,7 +68,7 @@ fbq('init','1678547590026817');fbq('track','PageView');fbq('track','Lead');
     </div>
   </div>
 
-  <p class="help">Không tải được Ebook? Bạn vào nhóm Zalo và nhắn mình, mình gửi lại cho bạn ngay.</p>
+  <p class="help">Không mở được Ebook? Bạn vào nhóm Zalo và nhắn mình, mình gửi lại cho bạn ngay.</p>
   <p class="sign">Chúc bạn một ngày thảnh thơi</p>
 </div>
 
@@ -80,12 +81,6 @@ fbq('init','1678547590026817');fbq('track','PageView');fbq('track','Lead');
       document.getElementById('title').textContent = 'Cảm ơn bạn ' + first + ', Ebook của bạn đây';
     }
   } catch (e) {}
-  var dl = document.querySelector('a.btn.main');
-  if (dl) dl.addEventListener('click', function () {
-    var d = document.getElementById('done');
-    if (d) d.hidden = false;
-    try { if (window.fbq) fbq('track', 'Lead'); } catch (e) {}
-  });
 </script>
 </body>
 </html>
