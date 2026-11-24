@@ -31,8 +31,7 @@
   .btn.zalo { background: var(--rose); color: #fff; }
   .btn.zalo:hover { background: #bf3a6e; }
   .btn:focus-visible { outline: 3px solid rgba(47,82,64,.4); outline-offset: 2px; }
-  .alt { font-size: 14px; color: var(--muted); margin: 10px 0 0; text-align: center; }
-  .alt a { color: var(--forest); font-weight: 600; }
+  .done { margin-top: 12px; padding: 10px 12px; background: var(--sage-soft); border-radius: 10px; color: var(--forest); font-size: 14.5px; }
   .help { text-align: center; font-size: 14px; color: var(--muted); margin-top: 22px; }
   .sign { text-align: center; margin-top: 26px; font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 600; font-size: 20px; color: var(--forest); }
 </style>
@@ -52,23 +51,23 @@ fbq('init','1678547590026817');fbq('track','PageView');fbq('track','Lead');
   <div class="step">
     <div class="num">1</div>
     <div>
-      <h2>Vào nhóm Zalo Thảnh Thơi Mỗi Ngày</h2>
-      <p>Để mình hỗ trợ bạn thực hành và giải đáp những thắc mắc khi bạn cần nhé!</p>
-      <a class="btn zalo" href="https://zalo.me/g/jjtmpjdzmcuzw1xdnhrz" target="_blank" rel="noopener">Vào nhóm Zalo</a>
+      <h2>Tải Ebook về điện thoại</h2>
+      <p>Đọc khi nào bạn có vài phút. Bạn chỉ cần chọn một khoảng dừng và làm thử hôm nay.</p>
+      <a class="btn main" href="7-Thoi-Quen-Song-Thanh-Thoi-Vui-Khoe.pdf" download>Tải Ebook</a>
+      <p class="done" id="done" hidden>Ebook đang tải về máy của bạn. Bạn mở mục Tệp (Files) hoặc Tải xuống để đọc nhé. Giờ bạn bấm Vào nhóm Zalo ở bên dưới để cùng thực hành với mình.</p>
     </div>
   </div>
 
   <div class="step">
     <div class="num">2</div>
     <div>
-      <h2>Đọc Ebook ngay</h2>
-      <p>Đọc khi nào bạn có vài phút. Bạn chỉ cần chọn một khoảng dừng và làm thử hôm nay.</p>
-      <a class="btn main" href="ebook.html" target="_blank" rel="noopener">Đọc Ebook</a>
-      <p class="alt">Bạn thích lưu về máy? <a href="7-Thoi-Quen-Song-Thanh-Thoi-Vui-Khoe.pdf" download target="_blank" rel="noopener">Tải bản PDF</a></p>
+      <h2>Vào nhóm Zalo Thảnh Thơi Mỗi Ngày</h2>
+      <p>Để mình hỗ trợ bạn thực hành và giải đáp những thắc mắc khi bạn cần nhé!</p>
+      <a class="btn zalo" href="https://zalo.me/g/jjtmpjdzmcuzw1xdnhrz" target="_blank" rel="noopener">Vào nhóm Zalo</a>
     </div>
   </div>
 
-  <p class="help">Không đọc được Ebook? Bạn vào nhóm Zalo và nhắn mình, mình gửi lại cho bạn ngay.</p>
+  <p class="help">Không tải được Ebook? Bạn vào nhóm Zalo và nhắn mình, mình gửi lại cho bạn ngay.</p>
   <p class="sign">Chúc bạn một ngày thảnh thơi</p>
 </div>
 
@@ -81,6 +80,12 @@ fbq('init','1678547590026817');fbq('track','PageView');fbq('track','Lead');
       document.getElementById('title').textContent = 'Cảm ơn bạn ' + first + ', Ebook của bạn đây';
     }
   } catch (e) {}
+  var dl = document.querySelector('a.btn.main');
+  if (dl) dl.addEventListener('click', function () {
+    var d = document.getElementById('done');
+    if (d) d.hidden = false;
+    try { if (window.fbq) fbq('track', 'Lead'); } catch (e) {}
+  });
 </script>
 </body>
 </html>
