@@ -140,7 +140,7 @@ fbq('init','1678547590026817');fbq('track','PageView');
     }
 
     btn.disabled = true; btn.textContent = 'Đang mở Ebook cho bạn...';
-    try { sessionStorage.setItem('ebook_name', name); } catch (e) {}
+    try { sessionStorage.setItem('ebook_name', name); sessionStorage.setItem('ebook_email', email); } catch (e) {}
 
     var go = function () { window.location.href = 'cam-on-ebook.html'; };
     if (!LEAD_URL || trap) { go(); return; }

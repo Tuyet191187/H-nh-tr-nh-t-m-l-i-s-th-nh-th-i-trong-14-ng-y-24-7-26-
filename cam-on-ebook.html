@@ -34,6 +34,10 @@
   .step > div:last-child { flex: 1; min-width: 0; }
   .alt { font-size: 13.5px; color: var(--muted); margin: 10px 0 0; text-align: center; }
   .alt a { color: var(--forest); font-weight: 600; }
+  .check { text-align: center; font-size: 14.5px; color: var(--muted); margin: 0 auto 18px; max-width: 420px; }
+  .alt2 { text-align: center; font-size: 14px; color: var(--muted); margin-top: 16px; }
+  .alt2 a { color: var(--forest); font-weight: 600; }
+  .lead { word-break: break-word; }
   .help { text-align: center; font-size: 14px; color: var(--muted); margin-top: 22px; }
   .sign { text-align: center; margin-top: 26px; font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 600; font-size: 20px; color: var(--forest); }
 </style>
@@ -47,20 +51,11 @@ fbq('init','1678547590026817');fbq('track','PageView');fbq('track','Lead');
 <div class="wrap">
   <div class="brand">Ngô Ánh Tuyết</div>
   <img class="cover" src="ebook-bia.jpg" alt="Bìa Ebook 7 Thói Quen Giúp Bạn Sống Thảnh Thơi, Vui Khỏe" width="720" height="1020">
-  <h1 id="title">Cảm ơn bạn, Ebook của bạn đây</h1>
-  <p class="lead">Bạn làm giúp mình hai việc nhỏ này nhé.</p>
+  <h1 id="title">Cảm ơn bạn, Ebook đã được gửi vào email</h1>
+  <p class="lead" id="lead">Bạn mở email để đọc Ebook bất cứ lúc nào nhé.</p>
+  <p class="check">Chưa thấy email? Bạn kiểm tra thư mục Quảng cáo hoặc Spam, hoặc vào nhóm Zalo Thảnh Thơi Mỗi Ngày, Ebook có sẵn ở bài ghim đầu nhóm.</p>
 
   <div class="step">
-    <div class="num">1</div>
-    <div>
-      <h2>Đọc Ebook ngay</h2>
-      <a class="btn main" href="ebook.html">Đọc Ebook ngay</a>
-      <p class="alt">Muốn lưu về máy? <a href="7-Thoi-Quen-Song-Thanh-Thoi-Vui-Khoe.pdf" download>Tải bản PDF</a></p>
-    </div>
-  </div>
-
-  <div class="step">
-    <div class="num">2</div>
     <div>
       <h2>Vào nhóm Zalo Thảnh Thơi Mỗi Ngày</h2>
       <p>Để mình hỗ trợ bạn thực hành và giải đáp những thắc mắc khi bạn cần nhé!</p>
@@ -68,17 +63,20 @@ fbq('init','1678547590026817');fbq('track','PageView');fbq('track','Lead');
     </div>
   </div>
 
-  <p class="help">Không mở được Ebook? Bạn vào nhóm Zalo và nhắn mình, mình gửi lại cho bạn ngay.</p>
+  <p class="alt2">Hoặc <a href="ebook.html">đọc Ebook ngay tại đây</a></p>
   <p class="sign">Chúc bạn một ngày thảnh thơi</p>
 </div>
 
 <script>
   try {
     var n = sessionStorage.getItem('ebook_name');
+    var em = sessionStorage.getItem('ebook_email');
     if (n) {
       var parts = n.trim().split(/\s+/);
-      var first = parts[parts.length - 1];
-      document.getElementById('title').textContent = 'Cảm ơn bạn ' + first + ', Ebook của bạn đây';
+      document.getElementById('title').textContent = 'Cảm ơn bạn ' + parts[parts.length - 1] + ', Ebook đã được gửi vào email';
+    }
+    if (em) {
+      document.getElementById('lead').textContent = 'Mình đã gửi Ebook tới ' + em + '. Bạn mở email để đọc bất cứ lúc nào nhé.';
     }
   } catch (e) {}
 </script>
